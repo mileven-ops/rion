@@ -1,0 +1,1227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#090a0f" />
+  <meta name="description" content="Yerion's high-end personal sanctuary on the internet." />
+  <title>Yerion | Personal Sanctuary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #090a0f;
+      --card-bg: rgba(255, 255, 255, 0.028);
+      --card-border: rgba(255, 255, 255, 0.07);
+      --card-border-hover: rgba(255, 255, 255, 0.18);
+      --text: #f4f5f8;
+      --muted: #9498a8;
+      --accent-glow: rgba(139, 92, 246, 0.15);
+      --cyan-glow: rgba(56, 189, 248, 0.12);
+      --radius: 28px;
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      filter: blur(120px);
+      border-radius: 50%;
+      opacity: 0.45;
+      animation: floatBlob 20s ease-in-out infinite alternate;
+    }
+    .blob-1 {
+      width: 550px;
+      height: 550px;
+      background: rgba(120, 80, 255, 0.18);
+      top: -150px;
+      left: 10%;
+    }
+    .blob-2 {
+      width: 600px;
+      height: 600px;
+      background: rgba(14, 165, 233, 0.13);
+      bottom: -150px;
+      right: 5%;
+      animation-delay: -5s;
+    }
+    .blob-3 {
+      width: 400px;
+      height: 400px;
+      background: rgba(236, 72, 153, 0.1);
+      top: 40%;
+      left: 40%;
+      animation-delay: -10s;
+    }
+
+    @keyframes floatBlob {
+      0% { transform: translate(0px, 0px) scale(1); }
+      50% { transform: translate(30px, -40px) scale(1.08); }
+      100% { transform: translate(-20px, 25px) scale(0.95); }
+    }
+
+    /* Noise texture overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.08;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    button, input { font: inherit; }
+    button { color: inherit; cursor: pointer; border: none; background: transparent; }
+
+    .shell {
+      position: relative;
+      z-index: 2;
+      width: min(1100px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 100px 0 50px;
+    }
+
+    .topbar {
+      position: fixed;
+      z-index: 10;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      width: min(1100px, calc(100% - 40px));
+      padding: 12px 18px 12px 22px;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 24px;
+      background: rgba(15, 17, 23, 0.65);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      transition: var(--transition);
+    }
+
+    .brand {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      font-size: 19px;
+      background: linear-gradient(135deg, #ffffff 30%, #a1a5b7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .brand span { color: #818cf8; -webkit-text-fill-color: #818cf8; }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .top-btn {
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      display: grid;
+      place-items: center;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .top-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.2);
+    }
+
+    .top-btn svg { width: 19px; height: 19px; color: #d1d5db; }
+    
+    .inbox-dot {
+      position: absolute;
+      right: 9px;
+      top: 9px;
+      width: 7px;
+      height: 7px;
+      background: #818cf8;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #818cf8;
+      display: none;
+    }
+    .inbox-dot.show { display: block; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .card {
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+      backdrop-filter: blur(30px) saturate(160%);
+      -webkit-backdrop-filter: blur(30px) saturate(160%);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .card:hover {
+      border-color: var(--card-border-hover);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .profile {
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      min-height: 640px;
+    }
+
+    .profile-head {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 28px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #4f46e5 0%, #312e81 50%, #1e1b4b 100%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 0 12px 30px rgba(79, 70, 229, 0.35);
+      font-family: 'Outfit', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.06em;
+      color: #fff;
+    }
+
+    .eyebrow {
+      color: #818cf8;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 38px;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      margin: 0 0 8px;
+      background: linear-gradient(135deg, #ffffff 20%, #c7d2fe 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #9ca3af;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .status i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 12px #34d399;
+    }
+
+    .bio {
+      margin: 32px 0 24px;
+      padding: 20px 22px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 20px;
+      color: #cbd5e1;
+      line-height: 1.75;
+      font-size: 14px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    }
+    .bio strong { color: #f8fafc; font-weight: 600; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #6b7280;
+      margin-bottom: 14px;
+    }
+
+    .socials {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 30px;
+      align-items: center;
+    }
+
+    .social {
+      width: 52px;
+      height: 52px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, 0.03);
+      transition: var(--transition);
+      text-decoration: none;
+      color: #e2e8f0;
+    }
+    .social:hover {
+      background: rgba(129, 140, 248, 0.15);
+      border-color: rgba(129, 140, 248, 0.4);
+      transform: translateY(-4px);
+      color: #818cf8;
+      box-shadow: 0 10px 25px rgba(129, 140, 248, 0.25);
+    }
+    .social svg { width: 22px; height: 22px; fill: currentColor; }
+
+    .social-label {
+      font-size: 12px;
+      color: #6b7280;
+      font-weight: 500;
+      margin-left: 6px;
+    }
+
+    .music {
+      margin-top: auto;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      background: rgba(0, 0, 0, 0.2);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .music-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .album {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      background: radial-gradient(circle at 30% 30%, #818cf8, #3730a3 50%, #1e1b4b 90%);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+    }
+    .album svg { width: 26px; color: #fff; opacity: 0.9; }
+
+    .track-info { min-width: 0; flex: 1; }
+    .track-title { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #f8fafc; }
+    .track-sub { font-size: 12px; color: #9ca3af; margin-top: 4px; }
+
+    .play {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06);
+      display: grid;
+      place-items: center;
+      transition: var(--transition);
+      color: #fff;
+    }
+    .play:hover {
+      background: #818cf8;
+      border-color: #818cf8;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(129, 140, 248, 0.5);
+    }
+    .play svg { width: 18px; height: 18px; fill: currentColor; }
+
+    .music-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .track-select {
+      min-width: 0;
+      flex: 1;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      color: #e2e8f0;
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-size: 12px;
+      outline: none;
+      transition: var(--transition);
+    }
+    .track-select:focus { border-color: rgba(129, 140, 248, 0.5); background: rgba(255, 255, 255, 0.06); }
+    .track-select option { background: #12131a; color: #fff; }
+
+    .volume { width: 80px; accent-color: #818cf8; cursor: pointer; }
+    .player-note { font-size: 11px; color: #6b7280; margin-top: 12px; line-height: 1.5; }
+
+    .activity {
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      min-height: 640px;
+    }
+
+    .card-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .card-heading h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin: 0;
+      color: #f8fafc;
+    }
+
+    .live-pill {
+      font-size: 11px;
+      font-weight: 500;
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 6px 12px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .live-pill::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 10px #34d399;
+    }
+
+    .activity-box {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      padding: 24px;
+      background: rgba(0, 0, 0, 0.22);
+      min-height: 205px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      transition: var(--transition);
+    }
+    .activity-box:hover { border-color: rgba(129, 140, 248, 0.3); }
+
+    .activity-top { display: flex; justify-content: space-between; align-items: center; }
+    .activity-icon {
+      width: 46px;
+      height: 46px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, 0.04);
+      color: #818cf8;
+    }
+    .activity-icon svg { width: 22px; height: 22px; }
+    .activity-time { font-size: 11px; font-weight: 600; color: #6b7280; letter-spacing: 0.05em; }
+
+    .activity-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin: 20px 0 8px;
+      color: #fff;
+    }
+    .activity-desc { font-size: 13px; color: #9ca3af; line-height: 1.65; margin: 0; }
+
+    .activity-progress { display: flex; gap: 6px; margin-top: 24px; }
+    .activity-progress span { height: 4px; border-radius: 6px; flex: 1; background: rgba(255, 255, 255, 0.08); transition: var(--transition); }
+    .activity-progress span.active { background: #818cf8; box-shadow: 0 0 10px rgba(129, 140, 248, 0.6); }
+
+    .game-title { margin: 30px 0 14px; }
+    .game-list { display: flex; flex-direction: column; gap: 10px; }
+    
+    .game {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 14px 16px;
+      transition: var(--transition);
+    }
+    .game:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateX(4px);
+    }
+
+    .game-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #e2e8f0;
+    }
+    .game-icon svg { width: 22px; height: 22px; }
+
+    .game-info { min-width: 0; flex: 1; }
+    .game-name { font-size: 14px; font-weight: 600; color: #f8fafc; }
+    .game-handle { font-size: 12px; color: #9ca3af; margin-top: 4px; }
+    
+    .game-tag {
+      font-size: 10px;
+      font-weight: 600;
+      color: #818cf8;
+      border: 1px solid rgba(129, 140, 248, 0.25);
+      background: rgba(129, 140, 248, 0.08);
+      border-radius: 10px;
+      padding: 6px 10px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .server {
+      margin-top: auto;
+      padding: 18px 20px;
+      border: 1px solid rgba(88, 101, 242, 0.25);
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: linear-gradient(135deg, rgba(88, 101, 242, 0.12), rgba(255, 255, 255, 0.02));
+      box-shadow: 0 10px 30px rgba(88, 101, 242, 0.1);
+      transition: var(--transition);
+    }
+    .server:hover {
+      border-color: rgba(88, 101, 242, 0.5);
+      box-shadow: 0 15px 40px rgba(88, 101, 242, 0.2);
+    }
+
+    .server-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      background: rgba(88, 101, 242, 0.2);
+      border: 1px solid rgba(88, 101, 242, 0.4);
+      display: grid;
+      place-items: center;
+      color: #8ea1ff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+    }
+    .server-info { flex: 1; min-width: 0; }
+    .server-name { font-size: 13px; font-weight: 700; color: #fff; }
+    .server-desc { font-size: 11px; color: #9ca3af; margin-top: 4px; line-height: 1.4; }
+    
+    .server-link {
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 10px 14px;
+      white-space: nowrap;
+      transition: var(--transition);
+    }
+    .server-link:hover {
+      background: #5865f2;
+      border-color: #5865f2;
+      box-shadow: 0 0 20px rgba(88, 101, 242, 0.5);
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      color: #6b7280;
+      font-size: 12px;
+      padding: 30px 6px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      margin-top: 30px;
+    }
+    .footer a { color: #9ca3af; text-decoration: none; transition: var(--transition); }
+    .footer a:hover { color: #fff; }
+
+    .scrim {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      background: rgba(5, 6, 10, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    .scrim.open { opacity: 1; visibility: visible; }
+
+    .panel {
+      position: fixed;
+      z-index: 25;
+      right: 24px;
+      top: 86px;
+      width: min(420px, calc(100% - 32px));
+      height: min(640px, calc(100dvh - 110px));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 30px;
+      background: rgba(16, 18, 26, 0.92);
+      backdrop-filter: blur(35px) saturate(180%);
+      -webkit-backdrop-filter: blur(35px) saturate(180%);
+      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: translateY(-12px) scale(0.97);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .panel.open { transform: translateY(0) scale(1); opacity: 1; visibility: visible; }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    .bot-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #818cf8, #4f46e5);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(129, 140, 248, 0.3);
+    }
+
+    .panel-title { font-size: 14px; font-weight: 700; color: #fff; }
+    .panel-subtitle { font-size: 11px; color: #9ca3af; margin-top: 3px; }
+
+    .panel-close {
+      margin-left: auto;
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      display: grid;
+      place-items: center;
+      color: #cbd5e1;
+      transition: var(--transition);
+    }
+    .panel-close:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
+    .panel-close svg { width: 16px; height: 16px; }
+
+    .chat-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      scroll-behavior: smooth;
+    }
+
+    .welcome {
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 20px 20px 20px 6px;
+      color: #e2e8f0;
+      font-size: 13px;
+      line-height: 1.65;
+      max-width: 92%;
+    }
+
+    .quick-title { font-size: 11px; font-weight: 600; color: #6b7280; margin: 6px 0 2px; letter-spacing: 0.05em; text-transform: uppercase; }
+    .quick-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    
+    .quick {
+      font-size: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      text-align: left;
+      color: #e2e8f0;
+      transition: var(--transition);
+    }
+    .quick:hover { background: rgba(129, 140, 248, 0.15); border-color: rgba(129, 140, 248, 0.4); color: #fff; }
+
+    .message {
+      font-size: 13px;
+      line-height: 1.6;
+      max-width: 88%;
+      padding: 12px 16px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    .message.user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, #818cf8, #6366f1);
+      color: #fff;
+      border-radius: 20px 20px 6px 20px;
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+    }
+    .message.bot {
+      align-self: flex-start;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px 20px 20px 6px;
+      color: #f1f5f9;
+    }
+
+    .typing { color: #9ca3af; font-size: 12px; padding: 4px 8px; font-style: italic; }
+
+    .chat-form {
+      padding: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    .chat-input {
+      flex: 1;
+      min-width: 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 12px 16px;
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+      transition: var(--transition);
+    }
+    .chat-input:focus { border-color: #818cf8; background: rgba(255, 255, 255, 0.07); box-shadow: 0 0 15px rgba(129, 140, 248, 0.2); }
+
+    .send {
+      width: 46px;
+      border: 0;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #818cf8, #6366f1);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      transition: var(--transition);
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+    }
+    .send:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(99, 102, 241, 0.5); }
+    .send svg { width: 18px; height: 18px; }
+
+    .inbox-panel {
+      position: fixed;
+      z-index: 25;
+      right: 24px;
+      top: 86px;
+      width: min(380px, calc(100% - 32px));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 28px;
+      background: rgba(16, 18, 26, 0.94);
+      backdrop-filter: blur(35px) saturate(180%);
+      -webkit-backdrop-filter: blur(35px) saturate(180%);
+      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .inbox-panel.open { opacity: 1; visibility: visible; transform: translateY(0); }
+
+    .inbox-head { display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 700; color: #fff; }
+    .inbox-empty { font-size: 13px; line-height: 1.7; color: #9ca3af; padding: 24px 6px 10px; }
+    
+    .inbox-item {
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      font-size: 12px;
+      color: #e2e8f0;
+      line-height: 1.6;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 30;
+      bottom: 30px;
+      left: 50%;
+      transform: translate(-50%, 20px);
+      opacity: 0;
+      pointer-events: none;
+      padding: 12px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      background: rgba(22, 24, 35, 0.95);
+      backdrop-filter: blur(20px);
+      color: #f8fafc;
+      font-size: 12px;
+      font-weight: 500;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    @media(max-width: 768px) {
+      .shell { padding-top: 90px; width: min(520px, calc(100% - 24px)); }
+      .layout { grid-template-columns: 1fr; }
+      .profile, .activity { min-height: unset; padding: 26px; }
+      .topbar { top: 12px; width: calc(100% - 24px); }
+      .panel, .inbox-panel { right: 12px; top: 72px; width: calc(100% - 24px); height: min(650px, calc(100dvh - 86px)); }
+      .inbox-panel { height: auto; }
+      .name { font-size: 32px; }
+    }
+
+    @media(prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <header class="topbar">
+    <div class="brand">yerion<span>.space</span></div>
+    <div class="top-actions">
+      <button class="top-btn" id="inboxToggle" aria-label="open inbox" title="Inbox">
+        <span class="inbox-dot" id="inboxDot"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg>
+      </button>
+      <button class="top-btn" id="chatToggle" aria-label="open live chat" title="AI Assistant">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H5l1.5-3A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8.5 11h7M8.5 14h4"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="shell">
+    <div class="layout">
+      <section class="card profile">
+        <div class="profile-head">
+          <div class="avatar" id="avatarMark">Y.</div>
+          <div>
+            <div class="eyebrow">Personal Sanctuary / 001</div>
+            <h1 class="name" id="displayName">Yerion</h1>
+            <div class="status"><i></i><span>Around, on my own time</span></div>
+          </div>
+        </div>
+        <div class="bio">
+          <strong>Hello! Yerion here.</strong><br>
+          Available from 06:00 PM - 00:00 AM.<br>
+          Direct messages outside operating hours will not be replied to!
+        </div>
+        <div class="section-label">Find me elsewhere</div>
+        <div class="socials">
+          <a class="social" id="discordLink" href="https://discord.com/users/yerion_" target="_blank" rel="noopener noreferrer" aria-label="discord" title="Discord">
+            <svg viewBox="0 0 24 24"><path d="M19.7 5.2a18 18 0 0 0-4.4-1.4l-.5 1a16.5 16.5 0 0 0-5.6 0l-.5-1a18 18 0 0 0-4.4 1.4C1.5 9.3.7 13.3 1.1 17.2a18 18 0 0 0 5.4 2.7l1.2-2a11 11 0 0 1-1.9-.9l.5-.4c3.7 1.7 7.7 1.7 11.3 0l.5.4a11 11 0 0 1-1.9.9l1.2 2a18 18 0 0 0 5.4-2.7c.5-4.5-.8-8.5-3.1-12ZM8.8 14.7c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2Zm6.4 0c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2Z"/></svg>
+          </a>
+          <a class="social" id="spotifyLink" href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer" aria-label="spotify" title="Spotify">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.8.8 0 0 1-1.1.3c-2.8-1.7-6.3-2.1-10.4-1.1a.8.8 0 1 1-.4-1.6c4.5-1 8.4-.6 11.6 1.4.4.2.5.7.3 1Zm1.4-3a1 1 0 0 1-1.3.4c-3.2-2-8.1-2.6-11.9-1.4a1 1 0 0 1-.6-1.9c4.4-1.3 9.8-.7 13.4 1.6.5.3.7.9.4 1.3Zm.1-3.1c-3.8-2.2-10.1-2.4-13.7-1.3a1.2 1.2 0 0 1-.7-2.3c4.2-1.3 11.1-1 15.5 1.6a1.2 1.2 0 0 1-1.1 2Z"/></svg>
+          </a>
+          <a class="social" id="robloxLink" href="https://www.roblox.com/users/" target="_blank" rel="noopener noreferrer" aria-label="roblox" title="Roblox">
+            <svg viewBox="0 0 24 24"><path d="m5.1 2 16.9 4.5L17.9 22 1 17.5 5.1 2Zm4.2 6.3-1.4 5.4 5.4 1.4 1.4-5.4-5.4-1.4Z"/></svg>
+          </a>
+          <span class="social-label">My profiles ↗</span>
+        </div>
+        
+        <div class="music">
+          <div class="section-label" style="margin-bottom: 10px;">Currently in the background</div>
+          <div class="music-top">
+            <div class="album">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2.5"/><path d="M12 3.5v6m8.5 2.5h-6M12 20.5v-6M3.5 12h6"/></svg>
+            </div>
+            <div class="track-info">
+              <div class="track-title" id="trackTitle">nightfall in empty halls</div>
+              <div class="track-sub" id="trackArtist">dark ambient · 01</div>
+            </div>
+            <button class="play" id="playBtn" aria-label="play music">
+              <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <div class="music-controls">
+            <select class="track-select" id="trackSelect" aria-label="select ambient track"></select>
+            <input class="volume" id="volume" aria-label="volume" type="range" min="0" max="1" step=".05" value=".45">
+          </div>
+          <div class="player-note">Add your own MP3 or audio URL in <span style="color:#a5b4fc">config.js</span>. Audio only plays after you press play.</div>
+          <audio id="audio" preload="none"></audio>
+        </div>
+      </section>
+
+      <section class="card activity">
+        <div class="card-heading">
+          <h2>My Current State</h2>
+          <span class="live-pill">Rotates every 2h</span>
+        </div>
+        <div class="activity-box">
+          <div>
+            <div class="activity-top">
+              <div class="activity-icon" id="activityIcon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 18 10 6l4 7 2-3 4 8Z"/><path d="M4 20h16"/></svg>
+              </div>
+              <div class="activity-time" id="activityTime">NOW / 01</div>
+            </div>
+            <h3 class="activity-title" id="activityTitle">Quietly recharging</h3>
+            <p class="activity-desc" id="activityDesc">Keeping things low-key, listening to music, and taking a break from the noise.</p>
+          </div>
+          <div class="activity-progress" id="activityProgress">
+            <span class="active"></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+
+        <div class="section-label game-title">Games I come back to</div>
+        <div class="game-list">
+          <div class="game">
+            <div class="game-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 8h10a4 4 0 0 1 3.8 5.2l-1 3.2a2 2 0 0 1-3.2 1l-2.1-1.6h-5L7.4 17a2 2 0 0 1-3.2-1l-1-3.2A4 4 0 0 1 7 8Z"/><path d="M7 10v4m-2-2h4m7-1h.01M17 13h.01"/></svg></div>
+            <div class="game-info"><div class="game-name">call of duty: mobile</div><div class="game-handle">player · Yerion</div></div>
+            <span class="game-tag">fps</span>
+          </div>
+          <div class="game">
+            <div class="game-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 20 7.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m4.5 7.8 7.5 4.4 7.5-4.4M12 12.2V21"/></svg></div>
+            <div class="game-info"><div class="game-name">clash of clans</div><div class="game-handle">player · Yerion</div></div>
+            <span class="game-tag">strategy</span>
+          </div>
+          <div class="game">
+            <div class="game-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.1 2 22 6.5 17.9 22 1 17.5 5.1 2Zm4.2 6.3-1.4 5.4 5.4 1.4 1.4-5.4-5.4-1.4Z"/></svg></div>
+            <div class="game-info"><div class="game-name">roblox</div><div class="game-handle">username · Yerion</div></div>
+            <span class="game-tag">variety</span>
+          </div>
+        </div>
+
+        <div class="server">
+          <div class="server-mark">sv</div>
+          <div class="server-info">
+            <div class="server-name">social verse</div>
+            <div class="server-desc">A place to talk, meet people, and find your next duo.</div>
+          </div>
+          <a class="server-link" href="https://discord.gg/socialverse" target="_blank" rel="noopener noreferrer">Join server ↗</a>
+        </div>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <span>© <span id="year"></span> Yerion. Made for quiet hours.</span>
+      <a href="https://discord.gg/socialverse" target="_blank" rel="noopener noreferrer">Social Verse ↗</a>
+    </footer>
+  </main>
+
+  <div class="scrim" id="scrim"></div>
+  
+  <aside class="panel" id="chatPanel" aria-label="live chat" aria-hidden="true">
+    <div class="panel-head">
+      <div class="bot-avatar">Y.</div>
+      <div>
+        <div class="panel-title">Assistant Yerion</div>
+        <div class="panel-subtitle">AI Assistant · Usually replies instantly</div>
+      </div>
+      <button class="panel-close" id="chatClose" aria-label="close chat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div class="welcome">Hey, welcome to my space. I'm Assistant Yerion. Ask me about Yerion, games, or Social Verse.</div>
+      <div class="quick-title">Try asking</div>
+      <div class="quick-list">
+        <button class="quick">Where can I find Yerion?</button>
+        <button class="quick">What games does Yerion play?</button>
+        <button class="quick">What is Social Verse?</button>
+        <button class="quick">When is Yerion available?</button>
+      </div>
+    </div>
+    <form class="chat-form" id="chatForm">
+      <input class="chat-input" id="chatInput" maxlength="1200" autocomplete="off" placeholder="Message Assistant Yerion..." aria-label="your message" required>
+      <button class="send" type="submit" aria-label="send message">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+      </button>
+    </form>
+  </aside>
+
+  <aside class="inbox-panel" id="inboxPanel">
+    <div class="inbox-head">
+      <span>Inbox</span>
+      <button class="panel-close" id="inboxClose" aria-label="close inbox">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="inbox-empty" id="inboxContent">Replies from your chat sessions will appear here while this page stays open. This demo inbox is stored in this browser only.</div>
+  </aside>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="/config.js"></script>
+  <script>
+    (()=>{
+      const config = window.YERION_CONFIG || {};
+      const $ = id => document.getElementById(id);
+      
+      $('displayName').textContent = config.displayName || 'Yerion';
+      $('avatarMark').textContent = config.avatarText || 'Y.';
+      document.title = (config.displayName || 'Yerion') + ' | Personal Sanctuary';
+      
+      $('discordLink').href = config.socials?.discord || 'https://discord.com/users/yerion_';
+      $('spotifyLink').href = config.socials?.spotify || 'https://open.spotify.com/';
+      $('robloxLink').href = config.socials?.roblox || 'https://www.roblox.com/users/';
+      $('year').textContent = new Date().getFullYear();
+
+      const activities = config.activities || [
+        {title:'Quietly recharging',desc:'Keeping things low-key, listening to music, and taking a break from the noise.',icon:'◌'},
+        {title:'In a gaming session',desc:'Probably queueing up a match. Send an invite if you want to play.',icon:'⌘'},
+        {title:'Music on, world off',desc:'Some dark ambient in the background while doing my own thing.',icon:'♫'},
+        {title:'Hanging around Social Verse',desc:'Checking in with the community and seeing who is around.',icon:'⌂'},
+        {title:'Doing my own thing',desc:'Offline for a bit, taking care of real-life stuff.',icon:'✳'}
+      ];
+
+      const cycleMs = 7200000;
+      const slot = Math.floor(Date.now() / cycleMs) % activities.length;
+
+      function setActivity(index) {
+        const a = activities[index % activities.length];
+        $('activityTitle').textContent = a.title;
+        $('activityDesc').textContent = a.desc;
+        $('activityTime').textContent = 'NOW / ' + String(index + 1).padStart(2, '0');
+        $('activityIcon').innerHTML = '<span style="font-size:24px">' + (a.icon || '◌') + '</span>';
+        $('activityProgress').innerHTML = activities.map((_, i) => '<span class="' + (i === index ? 'active' : '') + '"></span>').join('');
+      }
+
+      setActivity(slot);
+      setInterval(() => setActivity(Math.floor(Date.now() / cycleMs) % activities.length), 30000);
+
+      const tracks = config.tracks || [
+        {title:'nightfall in empty halls',artist:'dark ambient · 01',src:''},
+        {title:'the room beneath the lake',artist:'dark ambient · 02',src:''},
+        {title:'static between stars',artist:'dark ambient · 03',src:''},
+        {title:'forgotten signal',artist:'dark ambient · 04',src:''},
+        {title:'cold light, distant rain',artist:'dark ambient · 05',src:''}
+      ];
+
+      tracks.forEach((t, i) => {
+        const o = document.createElement('option');
+        o.value = String(i);
+        o.textContent = String(i + 1).padStart(2, '0') + ' · ' + t.title;
+        $('trackSelect').appendChild(o);
+      });
+
+      let currentTrack = 0;
+      const audio = $('audio');
+      audio.volume = .45;
+
+      function loadTrack(i) {
+        currentTrack = Number(i) || 0;
+        const t = tracks[currentTrack];
+        $('trackTitle').textContent = t.title;
+        $('trackArtist').textContent = t.artist || 'dark ambient';
+        audio.pause();
+        audio.src = t.src || '';
+        $('playIcon').innerHTML = '<path d="M8 5v14l11-7z"/>';
+        if (!t.src) showToast('Add an audio URL for this track in config.js');
+      }
+
+      $('trackSelect').addEventListener('change', e => loadTrack(e.target.value));
+      $('volume').addEventListener('input', e => audio.volume = Number(e.target.value));
+
+      $('playBtn').addEventListener('click', async () => {
+        if (!tracks[currentTrack]?.src) {
+          showToast('This track needs an audio URL in config.js');
+          return;
+        }
+        if (audio.paused) {
+          try {
+            await audio.play();
+            $('playIcon').innerHTML = '<path d="M6 5h4v14H6zm8 0h4v14h-4z"/>';
+          } catch(e) {
+            showToast('Could not play this audio URL');
+          }
+        } else {
+          audio.pause();
+          $('playIcon').innerHTML = '<path d="M8 5v14l11-7z"/>';
+        }
+      });
+
+      audio.addEventListener('ended', () => {
+        const next = (currentTrack + 1) % tracks.length;
+        $('trackSelect').value = next;
+        loadTrack(next);
+        if (tracks[next]?.src) $('playBtn').click();
+      });
+
+      const chatPanel = $('chatPanel'), inboxPanel = $('inboxPanel'), scrim = $('scrim');
+      let history = [];
+      let replyInbox = [];
+
+      function closePanels() {
+        chatPanel.classList.remove('open');
+        inboxPanel.classList.remove('open');
+        scrim.classList.remove('open');
+        chatPanel.setAttribute('aria-hidden', 'true');
+      }
+
+      function openChat() {
+        inboxPanel.classList.remove('open');
+        chatPanel.classList.add('open');
+        scrim.classList.add('open');
+        chatPanel.setAttribute('aria-hidden', 'false');
+        setTimeout(() => $('chatInput').focus(), 100);
+      }
+
+      function openInbox() {
+        chatPanel.classList.remove('open');
+        inboxPanel.classList.add('open');
+        scrim.classList.add('open');
+      }
+
+      $('chatToggle').addEventListener('click', () => chatPanel.classList.contains('open') ? closePanels() : openChat());
+      $('chatClose').addEventListener('click', closePanels);
+      $('inboxToggle').addEventListener('click', () => inboxPanel.classList.contains('open') ? closePanels() : openInbox());
+      $('inboxClose').addEventListener('click', closePanels);
+      scrim.addEventListener('click', closePanels);
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closePanels();
+      });
+
+      function showToast(msg) {
+        const t = $('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2800);
+      }
+
+      function addMessage(text, role) {
+        const el = document.createElement('div');
+        el.className = 'message ' + role;
+        el.textContent = text;
+        $('chatBody').appendChild(el);
+        $('chatBody').scrollTop = $('chatBody').scrollHeight;
+        return el;
+      }
+
+      function setInbox(reply) {
+        replyInbox.unshift({reply, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})});
+        $('inboxDot').classList.add('show');
+        $('inboxContent').innerHTML = '';
+        replyInbox.slice(0, 6).forEach(item => {
+          const el = document.createElement('div');
+          el.className = 'inbox-item';
+          el.textContent = item.time + ' · Assistant Yerion\n' + item.reply;
+          $('inboxContent').appendChild(el);
+        });
+      }
+
+      async function sendMessage(message) {
+        const text = message.trim();
+        if (!text) return;
+        document.querySelectorAll('.quick-list').forEach(e => e.remove());
+        document.querySelectorAll('.quick-title').forEach(e => e.remove());
+        addMessage(text, 'user');
+        history.push({role: 'user', parts: [{text}]});
+        $('chatInput').value = '';
+        $('chatInput').disabled = true;
+
+        const typing = document.createElement('div');
+        typing.className = 'typing';
+        typing.textContent = 'Assistant Yerion is typing...';
+        $('chatBody').appendChild(typing);
+        $('chatBody').scrollTop = $('chatBody').scrollHeight;
+
+        try {
+          const res = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({message: text, history: history.slice(-12)})
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || 'the chat service is unavailable');
+          const reply = String(data.reply || 'i could not generate a reply right now. please try again.');
+          typing.remove();
+          addMessage(reply, 'bot');
+          history.push({role: 'model', parts: [{text: reply}]});
+          setInbox(reply);
+        } catch(err) {
+          typing.remove();
+          const msg = err.message || 'connection error';
+          addMessage('sorry, i could not connect right now. ' + msg + ' please try again in a moment.', 'bot');
+          showToast('chat connection failed');
+        } finally {
+          $('chatInput').disabled = false;
+          $('chatInput').focus();
+        }
+      }
+
+      $('chatForm').addEventListener('submit', e => {
+        e.preventDefault();
+        sendMessage($('chatInput').value);
+      });
+
+      document.querySelectorAll('.quick').forEach(btn => btn.addEventListener('click', () => sendMessage(btn.textContent)));
+    })();
+  </script>
+</body>
+</html>
