@@ -1,759 +1,277 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yerion Profile</title>
-    <style>
-        /* CSS Settings */
-        :root {
-            --bg-dark: #121212;
-            --glass-bg: rgba(30, 30, 30, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0a0;
-            --accent-color: #8b0000; /* Crimson Red */
-            --accent-hover: #a50000;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#171719">
+  <meta name="description" content="The personal space of Yerion.">
+  <title>Yerion | Personal Space</title>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2rem;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Ambient Background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(139,0,0,0.1) 0%, rgba(18,18,18,0) 70%);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* Main Container */
-        .container {
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            z-index: 1;
-            transition: filter 0.3s ease;
-        }
-
-        /* Glassmorphism Card Style */
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 2rem;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-        }
-
-        /* Header Style (BerryModAPK Inspired) */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            width: 100%;
-            max-width: 800px;
-            padding: 0 1rem;
-        }
-        
-        .header-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--accent-color);
-        }
-
-        /* Profile Section (Card 1) */
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .profile-img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--accent-color);
-        }
-
-        .profile-info h1 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .profile-bio {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.5;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 1rem;
-            border-radius: 12px;
-            border-left: 4px solid var(--accent-color);
-        }
-
-        /* Social Links */
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .social-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            padding: 0.8rem 1.5rem;
-            border-radius: 12px;
-            color: var(--text-primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.2s ease;
-        }
-
-        .social-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-            border-color: var(--accent-color);
-        }
-
-        /* Music Player */
-        .music-player {
-            margin-top: 1.5rem;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 16px;
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .music-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .music-controls button {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            transition: color 0.2s;
-        }
-
-        .music-controls button:hover {
-            color: var(--accent-color);
-        }
-        
-        .track-list {
-            display: none; /* Hidden by default */
-        }
-
-        /* Activity & Games Section (Card 2) */
-        .activity-section {
-            margin-bottom: 2rem;
-        }
-
-        .section-title {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-            border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 0.5rem;
-        }
-
-        .current-activity {
-            background: rgba(139, 0, 0, 0.1);
-            border: 1px solid rgba(139, 0, 0, 0.3);
-            padding: 1rem;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .activity-indicator {
-            width: 10px;
-            height: 10px;
-            background: #4caf50;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #4caf50;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
-        }
-
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .game-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            padding: 1rem;
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .game-title {
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .game-username {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* Floating Actions (Top Right) */
-        .floating-actions {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 1rem;
-            z-index: 100;
-        }
-
-        .action-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            color: var(--text-primary);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        .action-btn:hover {
-            background: rgba(139, 0, 0, 0.4);
-            border-color: var(--accent-color);
-        }
-
-        .inbox-badge {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 12px;
-            height: 12px;
-            background: var(--accent-color);
-            border-radius: 50%;
-            display: none;
-        }
-
-        /* Live Chat Widget */
-        .chat-widget {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.9);
-            width: 90%;
-            max-width: 450px;
-            height: 80vh;
-            max-height: 600px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            display: flex;
-            flex-direction: column;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
-
-        .chat-widget.active {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .chat-header {
-            padding: 1.2rem;
-            border-bottom: 1px solid var(--glass-border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0,0,0,0.2);
-            border-top-left-radius: 24px;
-            border-top-right-radius: 24px;
-        }
-        
-        .chat-title {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .close-chat {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 1.5rem;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .message {
-            max-width: 80%;
-            padding: 0.8rem 1.2rem;
-            border-radius: 18px;
-            font-size: 0.95rem;
-            line-height: 1.4;
-        }
-
-        .message.ai {
-            background: rgba(255, 255, 255, 0.1);
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-        }
-
-        .message.user {
-            background: var(--accent-color);
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
-        }
-
-        .chat-options {
-            padding: 1rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .option-bubble {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .option-bubble:hover {
-            background: rgba(139, 0, 0, 0.2);
-            border-color: var(--accent-color);
-        }
-
-        .chat-input {
-            padding: 1rem;
-            border-top: 1px solid var(--glass-border);
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .chat-input input {
-            flex: 1;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--glass-border);
-            padding: 0.8rem 1rem;
-            border-radius: 20px;
-            color: white;
-            outline: none;
-        }
-        
-        .chat-input input:focus {
-            border-color: var(--accent-color);
-        }
-
-        .chat-input button {
-            background: var(--accent-color);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Overlay for blur effect */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(10px);
-            z-index: 999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        
-        /* Responsive */
-        @media (max-width: 600px) {
-            .social-links {
-                flex-direction: column;
-            }
-            .header-title {
-                display: none;
-            }
-        }
-    </style>
-    <!-- Include FontAwesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Header inspired by App Hub -->
-    <div class="header">
-        <div class="header-title"><i class="fas fa-layer-group"></i> YERION.HUB</div>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Yerion home">
+      <span class="brand-mark">Y</span>
+      <span>yerion<span class="brand-dot">.</span></span>
+    </a>
+
+    <div class="header-actions">
+      <button class="header-button" id="inbox-toggle"
+        aria-label="open inbox" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 5h16v14H4z"/>
+          <path d="m4 7 8 6 8-6"/>
+        </svg>
+        <span class="notification-dot" id="inbox-dot" hidden></span>
+      </button>
+
+      <button class="header-button" id="chat-toggle"
+        aria-label="open assistant yerion" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H5l1.5-3A7.5 7.5 0 1 1 20 11.5Z"/>
+          <path d="M9 11h.01M12.5 11h.01M16 11h.01"/>
+        </svg>
+      </button>
     </div>
+  </header>
 
-    <!-- Top Right Actions -->
-    <div class="floating-actions">
-        <div class="action-btn" id="inboxBtn" title="Inbox">
-            <i class="fas fa-envelope"></i>
-            <div class="inbox-badge" id="inboxBadge"></div>
-        </div>
-        <div class="action-btn" id="chatBtn" title="Assistant Yerion">
-            <i class="fas fa-robot"></i>
-        </div>
-    </div>
+  <main class="page-container">
 
-    <!-- Blur Overlay -->
-    <div class="overlay" id="overlay"></div>
+    <section class="profile-card glass-card" id="profile">
+      <div class="profile-cover">
+        <div class="cover-orb cover-orb-one"></div>
+        <div class="cover-orb cover-orb-two"></div>
+        <span class="cover-label">PERSONAL SPACE</span>
+      </div>
 
-    <!-- Main Content -->
-    <div class="container" id="mainContainer">
-        
-        <!-- Profile Card -->
-        <div class="glass-card">
-            <div class="profile-header">
-                <!-- Replace with your actual image URL -->
-                <img src="https://via.placeholder.com/150/1e1e1e/8b0000?text=Y" alt="Yerion" class="profile-img">
-                <div class="profile-info">
-                    <h1>Yerion</h1>
-                    <div style="color: var(--accent-color); font-size: 0.9rem; margin-bottom: 10px;">
-                        <i class="fas fa-check-circle"></i> Verified Profile
-                    </div>
-                </div>
-            </div>
+      <div class="profile-content">
+        <div class="avatar" id="profile-avatar">Y</div>
 
-            <div class="profile-bio">
-                <p><strong>"Hello! Yerion here. Available from 06:00pm - 00:00 AM. Direct messages outside of operating hours will not be replied to!"</strong></p>
-            </div>
-
-            <div class="social-links">
-                <!-- Edit these URLs with your actual links -->
-                <a href="https://discord.gg/socialverse" target="_blank" class="social-btn">
-                    <i class="fab fa-discord" style="color: #7289da;"></i> Discord
-                </a>
-                <a href="YOUR_SPOTIFY_URL" target="_blank" class="social-btn">
-                    <i class="fab fa-spotify" style="color: #1DB954;"></i> Spotify
-                </a>
-                <a href="YOUR_ROBLOX_URL" target="_blank" class="social-btn">
-                    <i class="fas fa-gamepad" style="color: #e5e5e5;"></i> Roblox
-                </a>
-            </div>
-
-            <!-- Music Player -->
-            <div class="music-player">
-                <div class="music-info">
-                    <i class="fas fa-music" style="color: var(--accent-color);"></i>
-                    <div>
-                        <div style="font-size: 0.9rem; font-weight: bold;" id="trackTitle">Dark Ambient Track 1</div>
-                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Currently Playing</div>
-                    </div>
-                </div>
-                <div class="music-controls">
-                    <button id="prevTrack"><i class="fas fa-step-backward"></i></button>
-                    <button id="playPause"><i class="fas fa-play"></i></button>
-                    <button id="nextTrack"><i class="fas fa-step-forward"></i></button>
-                </div>
-                <!-- Hidden Audio Element -->
-                <audio id="audioPlayer">
-                    <!-- Add your 5 dark ambient audio sources here -->
-                    <source src="track1.mp3" type="audio/mpeg">
-                </audio>
-            </div>
+        <div class="profile-heading">
+          <span class="status-indicator"></span>
+          <span class="eyebrow">DIGITAL PROFILE</span>
         </div>
 
-        <!-- Activity & Games Card -->
-        <div class="glass-card">
-            <div class="activity-section">
-                <h2 class="section-title">Current Status</h2>
-                <div class="current-activity">
-                    <div class="activity-indicator"></div>
-                    <div>
-                        <div style="font-size: 0.85rem; color: var(--text-secondary);">Status</div>
-                        <div id="dynamicActivity" style="font-weight: bold;">Exploring the Social Verse</div>
-                    </div>
-                </div>
-            </div>
+        <h1 id="profile-name">Yerion</h1>
+        <p class="profile-bio">
+          Hello! Yerion here. Available from 06:00pm - 00:00 AM.
+          Direct messages outside of operating hours will not be replied to!
+        </p>
 
+        <div class="social-links" id="social-links">
+          <a class="social-link" id="discord-link"
+            href="https://discord.gg/socialverse"
+            target="_blank" rel="noopener noreferrer"
+            aria-label="Discord">
+            <span class="social-icon discord-icon">D</span>
+            <span>Discord</span>
+          </a>
+
+          <a class="social-link" id="spotify-link"
+            href="https://open.spotify.com/"
+            target="_blank" rel="noopener noreferrer"
+            aria-label="Spotify">
+            <span class="social-icon spotify-icon">S</span>
+            <span>Spotify</span>
+          </a>
+
+          <a class="social-link" id="roblox-link"
+            href="https://www.roblox.com/"
+            target="_blank" rel="noopener noreferrer"
+            aria-label="Roblox">
+            <span class="social-icon roblox-icon">R</span>
+            <span>Roblox</span>
+          </a>
+        </div>
+
+        <div class="card-divider"></div>
+
+        <section class="music-section" aria-label="Music player">
+          <div class="section-heading">
             <div>
-                <h2 class="section-title">Frequently Played</h2>
-                <div class="games-grid">
-                    
-                    <div class="game-card">
-                        <div class="game-title">Call of Duty Mobile</div>
-                        <div class="game-username">
-                            <i class="fas fa-user-tag" style="color: var(--accent-color);"></i> IGN: Yerion
-                        </div>
-                    </div>
-                    
-                    <div class="game-card">
-                        <div class="game-title">Clash of Clans</div>
-                        <div class="game-username">
-                            <i class="fas fa-user-tag" style="color: var(--accent-color);"></i> IGN: Yerion
-                        </div>
-                    </div>
-                    
-                    <div class="game-card">
-                        <div class="game-title">Roblox</div>
-                        <div class="game-username">
-                            <i class="fas fa-user-tag" style="color: var(--accent-color);"></i> IGN: Yerion
-                        </div>
-                    </div>
-
-                </div>
+              <span class="eyebrow">NOW PLAYING</span>
+              <h2>Soundscape</h2>
             </div>
+            <span class="music-status">
+              <span class="status-indicator"></span>
+              ambient
+            </span>
+          </div>
+
+          <div class="music-player">
+            <div class="album-art" id="album-art">
+              <span>Y.</span>
+            </div>
+
+            <div class="track-info">
+              <p class="track-title" id="track-title">Midnight Echoes</p>
+              <p class="track-artist" id="track-artist">Dark Ambient</p>
+              <div class="progress-track">
+                <div class="progress-fill" id="progress-fill"></div>
+              </div>
+              <div class="track-time">
+                <span id="current-time">0:00</span>
+                <span id="duration">0:00</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="music-controls">
+            <button class="control-button" id="previous-track"
+              aria-label="previous track">|◀</button>
+            <button class="control-button play-button" id="play-toggle"
+              aria-label="play music">▶</button>
+            <button class="control-button" id="next-track"
+              aria-label="next track">▶|</button>
+            <button class="control-button volume-button" id="volume-toggle"
+              aria-label="toggle volume">♫</button>
+          </div>
+
+          <label class="track-select-label" for="track-select">
+            SELECT TRACK
+          </label>
+          <select id="track-select" class="track-select">
+            <option value="0">01 · Midnight Echoes</option>
+            <option value="1">02 · Empty Streets</option>
+            <option value="2">03 · Silent Rooms</option>
+            <option value="3">04 · Fading Memories</option>
+            <option value="4">05 · After Dark</option>
+          </select>
+          <p class="music-hint">dark ambient collection</p>
+        </section>
+      </div>
+    </section>
+
+    <section class="activity-card glass-card" id="activity">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">A LITTLE ABOUT MY DAY</span>
+          <h2>Activity</h2>
         </div>
+        <span class="activity-badge">
+          <span class="status-indicator"></span>
+          <span id="activity-status">currently</span>
+        </span>
+      </div>
+
+      <div class="activity-feature">
+        <div class="activity-art" id="activity-art">◌</div>
+        <div class="activity-copy">
+          <span class="eyebrow">CURRENT MOOD</span>
+          <h3 id="activity-title">Lost in the music</h3>
+          <p id="activity-description">
+            Taking a moment away from everything.
+          </p>
+        </div>
+      </div>
+
+      <p class="subsection-label">GAMES I PLAY</p>
+
+      <div class="game-list">
+        <div class="game-item">
+          <div class="game-icon cod-icon">COD</div>
+          <div class="game-info">
+            <h3>Call of Duty Mobile</h3>
+            <p>Username: Yerion</p>
+          </div>
+          <span class="game-arrow">↗</span>
+        </div>
+
+        <div class="game-item">
+          <div class="game-icon coc-icon">COC</div>
+          <div class="game-info">
+            <h3>Clash of Clans</h3>
+            <p>Username: Yerion</p>
+          </div>
+          <span class="game-arrow">↗</span>
+        </div>
+
+        <div class="game-item">
+          <div class="game-icon roblox-game-icon">R</div>
+          <div class="game-info">
+            <h3>Roblox</h3>
+            <p>Username: Yerion</p>
+          </div>
+          <span class="game-arrow">↗</span>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <span>made by yerion</span>
+      <span>© <span id="current-year">2026</span></span>
+    </footer>
+
+  </main>
+
+  <div class="panel-overlay" id="panel-overlay"></div>
+
+  <aside class="floating-panel chat-panel glass-card"
+    id="chat-panel" aria-label="Assistant Yerion" aria-hidden="true">
+    <div class="panel-header">
+      <div class="assistant-avatar">Y.</div>
+      <div class="panel-heading">
+        <h2>Assistant Yerion</h2>
+        <p><span class="status-indicator"></span> Powered by Gemini AI</p>
+      </div>
+      <button class="panel-close" data-close-panel
+        aria-label="close chat">×</button>
     </div>
 
-    <!-- Chat Widget (Assistant Yerion) -->
-    <div class="chat-widget" id="chatWidget">
-        <div class="chat-header">
-            <div class="chat-title">
-                <i class="fas fa-robot" style="color: var(--accent-color);"></i>
-                <div>
-                    <div style="font-weight: bold;">Assistant Yerion</div>
-                    <div style="font-size: 0.75rem; color: #4caf50;">Powered by Gemini AI</div>
-                </div>
-            </div>
-            <button class="close-chat" id="closeChat">&times;</button>
-        </div>
-        
-        <div class="chat-messages" id="chatMessages">
-            <div class="message ai">
-                Halo! Saya Assistant Yerion. Ada yang bisa saya bantu terkait profil, jadwal, atau server Social Verse?
-            </div>
-        </div>
-
-        <div class="chat-options" id="chatOptions">
-            <div class="option-bubble" onclick="sendOption('Dimana saya bisa menemukan Yerion?')">Dimana cari Yerion?</div>
-            <div class="option-bubble" onclick="sendOption('Jam berapa Yerion aktif?')">Jam operasional?</div>
-            <div class="option-bubble" onclick="sendOption('Game apa saja yang dimainkan?')">Game favorit?</div>
-        </div>
-
-        <div class="chat-input">
-            <input type="text" id="userInput" placeholder="Tanya sesuatu..." onkeypress="handleEnter(event)">
-            <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
-        </div>
+    <div class="chat-messages" id="chat-messages" aria-live="polite">
+      <div class="message assistant-message">
+        <p>hey, welcome to yerion's space. what would you like to know?</p>
+      </div>
     </div>
 
-    <script>
-        // --- Chat Widget Logic ---
-        const chatBtn = document.getElementById('chatBtn');
-        const closeChat = document.getElementById('closeChat');
-        const chatWidget = document.getElementById('chatWidget');
-        const overlay = document.getElementById('overlay');
-        const mainContainer = document.getElementById('mainContainer');
-        const inboxBadge = document.getElementById('inboxBadge');
+    <div class="quick-questions" id="quick-questions">
+      <button class="question-chip" data-question="Who is Yerion?">who is yerion?</button>
+      <button class="question-chip" data-question="Where can I find Yerion?">where to find yerion?</button>
+      <button class="question-chip" data-question="What games does Yerion play?">favorite games?</button>
+      <button class="question-chip" data-question="Tell me about Social Verse.">social verse?</button>
+    </div>
 
-        function openChat() {
-            chatWidget.classList.add('active');
-            overlay.classList.add('active');
-            mainContainer.style.filter = 'blur(5px)';
-            // Hide badge when opening chat
-            inboxBadge.style.display = 'none';
-        }
+    <form class="chat-form" id="chat-form">
+      <input type="text" id="chat-input"
+        placeholder="ask something..."
+        autocomplete="off" maxlength="1000"
+        aria-label="your message" required>
+      <button type="submit" id="chat-send" aria-label="send message">↑</button>
+    </form>
+    <p class="panel-footnote">assistant yerion can make mistakes</p>
+  </aside>
 
-        function closeChatUI() {
-            chatWidget.classList.remove('active');
-            overlay.classList.remove('active');
-            mainContainer.style.filter = 'none';
-        }
+  <aside class="floating-panel inbox-panel glass-card"
+    id="inbox-panel" aria-label="Inbox" aria-hidden="true">
+    <div class="panel-header">
+      <div class="inbox-avatar">✉</div>
+      <div class="panel-heading">
+        <h2>Inbox</h2>
+        <p>messages and replies</p>
+      </div>
+      <button class="panel-close" data-close-panel
+        aria-label="close inbox">×</button>
+    </div>
 
-        chatBtn.addEventListener('click', openChat);
-        closeChat.addEventListener('click', closeChatUI);
-        overlay.addEventListener('click', closeChatUI);
+    <div class="inbox-content" id="inbox-content">
+      <div class="inbox-empty">
+        <div class="empty-icon">✉</div>
+        <h3>nothing here yet</h3>
+        <p>replies to your messages will appear here.</p>
+      </div>
+    </div>
+  </aside>
 
-        // --- Gemini AI Simulation ---
-        const chatMessages = document.getElementById('chatMessages');
-        const userInput = document.getElementById('userInput');
-
-        function appendMessage(text, sender) {
-            const msgDiv = document.createElement('div');
-            msgDiv.classList.add('message', sender);
-            msgDiv.textContent = text;
-            chatMessages.appendChild(msgDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        function handleEnter(e) {
-            if (e.key === 'Enter') sendMessage();
-        }
-
-        function sendOption(text) {
-            userInput.value = text;
-            sendMessage();
-        }
-
-        function sendMessage() {
-            const text = userInput.value.trim();
-            if (!text) return;
-
-            // Add user message
-            appendMessage(text, 'user');
-            userInput.value = '';
-
-            // Remove options after first interaction to clean up UI
-            const options = document.getElementById('chatOptions');
-            if(options) options.style.display = 'none';
-
-            // Show typing...
-            const typingId = 'typing-' + Date.now();
-            const typingDiv = document.createElement('div');
-            typingDiv.classList.add('message', 'ai');
-            typingDiv.id = typingId;
-            typingDiv.innerHTML = '<i class="fas fa-ellipsis-h"></i>';
-            chatMessages.appendChild(typingDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            // Simulate AI Processing (Integrate real Gemini API here via backend)
-            setTimeout(() => {
-                document.getElementById(typingId).remove();
-                let reply = getGeminiResponse(text);
-                appendMessage(reply, 'ai');
-                
-                // Show notification badge if chat is closed while processing (simulation)
-                if(!chatWidget.classList.contains('active')) {
-                    inboxBadge.style.display = 'block';
-                }
-            }, 1000);
-        }
-
-        // Fake response logic based on user rules
-        function getGeminiResponse(input) {
-            let lowerInput = input.toLowerCase();
-            
-            if (lowerInput.includes('menemukan') || lowerInput.includes('dimana') || lowerInput.includes('discord')) {
-                return "Kamu bisa menemukan Yerion di server Discord Social Verse (https://discord.gg/socialverse) atau add langsung friendlist dengan username: @yerion_";
-            } 
-            else if (lowerInput.includes('jam') || lowerInput.includes('aktif') || lowerInput.includes('operasional')) {
-                return "Yerion aktif membalas pesan (Direct Message) mulai pukul 06:00 PM hingga 00:00 AM. Pesan di luar jam tersebut tidak akan dibalas ya!";
-            }
-            else if (lowerInput.includes('game') || lowerInput.includes('main')) {
-                return "Yerion sering main Call of Duty Mobile, Clash of Clans, dan Roblox. Username di semua game tersebut adalah 'Yerion'.";
-            }
-            else {
-                return "Halo! Saya Assistant Yerion yang ditenagai oleh Gemini AI. Ada yang bisa saya bantu seputar Yerion atau Social Verse?";
-            }
-        }
-
-        // --- Dynamic Activity Tracker ---
-        const activities = [
-            "Coding custom Lua scripts",
-            "Chilling in Social Verse",
-            "Grinding CoD Mobile Rank",
-            "Building in Roblox",
-            "Listening to Dark Ambient"
-        ];
-        
-        let activityIndex = 0;
-        setInterval(() => {
-            activityIndex = (activityIndex + 1) % activities.length;
-            document.getElementById('dynamicActivity').textContent = activities[activityIndex];
-        }, 7200000); // Changes every 2 hours (7200000 ms). For testing, change to 5000 (5 sec)
-
-        // --- Basic Music Player Logic ---
-        const tracks = ["Dark Ambient Track 1", "Eerie Voids", "Shadow Echoes", "Crimson Night", "Deep Space"];
-        let currentTrack = 0;
-        const trackTitle = document.getElementById('trackTitle');
-        const playBtn = document.getElementById('playPause');
-        
-        // Note: You need actual audio files linked to make it play sound.
-        let isPlaying = false;
-
-        document.getElementById('playPause').addEventListener('click', () => {
-            isPlaying = !isPlaying;
-            playBtn.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
-            // audioPlayer.play() / pause() would go here
-        });
-
-        document.getElementById('nextTrack').addEventListener('click', () => {
-            currentTrack = (currentTrack + 1) % tracks.length;
-            trackTitle.textContent = tracks[currentTrack];
-        });
-
-        document.getElementById('prevTrack').addEventListener('click', () => {
-            currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
-            trackTitle.textContent = tracks[currentTrack];
-        });
-
-    </script>
+  <script src="script.js"></script>
 </body>
 </html>
