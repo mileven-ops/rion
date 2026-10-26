@@ -103,39 +103,6 @@ footer .soc{margin:0}
 .ind.rd{transition:transform .4s cubic-bezier(.3,.9,.3,1),width .4s cubic-bezier(.3,.9,.3,1)}
 .srch{flex:none;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;padding:0;cursor:pointer;color:var(--t)}
 .srch svg.lucide{width:22px;height:22px}
-.pl{position:fixed;z-index:40;top:calc(env(safe-area-inset-top,0px) + 12px);left:50%;transform:translateX(-50%);width:min(calc(100vw - 24px),400px);padding:8px;border-radius:30px;transition:width .35s cubic-bezier(.2,.8,.2,1)}
-.pl.cm{width:150px}
-.pl .row{display:flex;align-items:center;gap:10px}
-.cv{position:relative;overflow:hidden;width:44px;height:44px;border-radius:13px;border:0;padding:0;cursor:pointer;flex:none;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#8B5CF6,#E040FB 60%,#22D3EE)}
-.cv img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.inf{flex:1;min-width:0;border:0;background:none;padding:0;text-align:left;cursor:pointer;display:block;line-height:1.3}
-.inf b,.inf span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.inf b{font-size:14px;font-weight:700}
-.inf span{font-size:12px;color:var(--t2)}
-.eq{display:flex;gap:2px;align-items:flex-end;height:14px;flex:none;margin-left:auto}
-.eq i{width:3px;height:4px;border-radius:2px;background:#A78BFA}
-[data-s=play] .eq i{animation:eq .9s ease-in-out infinite}
-[data-s=play] .eq i:nth-child(2){animation-delay:.2s}
-[data-s=play] .eq i:nth-child(3){animation-delay:.4s}
-[data-s=play] .eq i:nth-child(4){animation-delay:.1s}
-.pp{background:rgba(255,255,255,.14)}
-.iX,.sp{display:none}
-[data-s=play] .iP,[data-s=load] .iP{display:none}
-[data-s=play] .iX{display:block}
-[data-s=load] .sp{display:block}
-.sp{width:18px;height:18px;border:2px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
-.rg{-webkit-appearance:none;appearance:none;width:100%;height:16px;background:transparent;cursor:pointer;margin:2px 0 0;display:block}
-.rg:disabled{opacity:.4;cursor:default}
-.rg::-webkit-slider-runnable-track{height:4px;border-radius:4px;background:linear-gradient(90deg,#A78BFA var(--p,0%),rgba(255,255,255,.18) var(--p,0%))}
-.rg::-moz-range-track{height:4px;border-radius:4px;background:rgba(255,255,255,.18)}
-.rg::-moz-range-progress{height:4px;border-radius:4px;background:#A78BFA}
-.rg::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:#fff;margin-top:-4px;box-shadow:0 0 0 4px rgba(167,139,250,.25)}
-.rg::-moz-range-thumb{width:12px;height:12px;border:0;border-radius:50%;background:#fff}
-.xpn{display:none;gap:10px;padding:8px 6px 4px;font-size:12px;color:var(--t2)}
-.pl.ex .xpn{display:grid}
-.xpn .r{display:flex;align-items:center;gap:10px}
-.xpn .bt{min-height:40px;padding:0 14px;font-size:12px}
-.pl.cm .inf,.pl.cm #nx,.pl.cm #sk,.pl.cm .xpn{display:none}
 dialog{padding:0;color:var(--t);width:min(calc(100vw - 24px),560px);max-height:calc(100dvh - 40px);border:1px solid var(--gb);border-radius:28px;background:rgba(17,20,27,.92);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);box-shadow:0 30px 80px rgba(0,0,0,.6)}
 dialog::backdrop{background:rgba(5,6,10,.62);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 dialog[open]{animation:up .28s both}
@@ -154,8 +121,6 @@ body:has(dialog[open]){overflow:hidden}
 .rv{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s}
 .rv.in{opacity:1;transform:none}
 @keyframes up{from{opacity:0;transform:translateY(12px)}}
-@keyframes eq{0%,100%{height:4px}50%{height:14px}}
-@keyframes sp{to{transform:rotate(360deg)}}
 @media(max-width:900px){.hero{grid-template-columns:1fr;gap:28px}#home{min-height:0;padding-top:108px}.s8{grid-column:span 12}.s4{grid-column:span 6}.r2{grid-row:auto}.pg,.sg{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.s4{grid-column:span 12}.pg,.sg,.cg{grid-template-columns:1fr}section{padding:56px 16px 4px}.cd{padding:18px}.gi h3{font-size:24px}}
 @media(max-width:380px){.dock a{font-size:9.5px}.srch{width:56px;height:56px}}
@@ -164,23 +129,6 @@ body:has(dialog[open]){overflow:hidden}
 </head>
 <body>
 <div class="bg" aria-hidden="true"></div>
-
-<div class="pl g" id="pl" role="region" aria-label="Pemutar musik" data-s="none">
- <div class="row">
-  <button class="cv" id="cv" aria-label="Perkecil atau besarkan player"><img id="ci" alt="" hidden><i data-lucide="music"></i></button>
-  <button class="inf" id="inf" aria-expanded="false" aria-label="Tampilkan detail player"><b id="ti"></b><span id="ar"></span></button>
-  <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-  <button class="ib pp" id="pp" aria-label="Putar"><i data-lucide="play" class="iP"></i><i data-lucide="pause" class="iX"></i><span class="sp"></span></button>
-  <button class="ib" id="nx" aria-label="Lagu berikutnya"><i data-lucide="skip-forward"></i></button>
- </div>
- <input class="rg" id="sk" type="range" min="0" max="1000" value="0" aria-label="Posisi lagu" disabled>
- <div class="xpn">
-  <div class="r"><span id="tm">0:00 / 0:00</span><span id="st" style="margin-left:auto;text-align:right"></span></div>
-  <div class="r"><i data-lucide="volume-2"></i><input class="rg" id="vl" type="range" min="0" max="1" step=".05" aria-label="Volume"></div>
-  <div class="r" style="flex-wrap:wrap"><a class="bt" id="sp" href="#" target="_blank" rel="noopener noreferrer"><i data-lucide="external-link"></i>Spotify</a><button class="bt" id="ad"><i data-lucide="plus"></i>Tambah audio</button><button class="bt" id="cmb">Perkecil</button></div>
- </div>
- <input type="file" id="fi" accept="audio/*" multiple hidden>
-</div>
 
 <main>
  <section id="home"><div class="hero"></div></section>
@@ -231,7 +179,6 @@ const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelecto
 const E=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const U=u=>/^https?:\/\//i.test(u||'')?u:'',IMG=u=>/^(data:image\/|https?:\/\/)/i.test(u||'');
 const ic=()=>window.lucide&&lucide.createIcons();
-const LS={g:k=>{try{return localStorage.getItem(k)}catch(e){return null}},s:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
 
 /* ===== CONFIG: ubah data di sini. URL kosong = tombol/tautan tidak ditampilkan ===== */
 const C={
@@ -248,33 +195,29 @@ latest:{t:"Website pribadi versi 1.0 selesai",w:"26 Okt 2026",d:"Profil, dashboa
 focus:{t:"Menyempurnakan website pribadi",d:"Merapikan konten, desain, dan interaksi agar siap dibagikan."},
 learn:["HTML & CSS","JavaScript","UI design"],
 avail:{open:true,t:"Terbuka untuk kolaborasi",d:"Hubungi lewat bagian Contact di bawah."},
-tl:[{i:"rocket",t:"Website pribadi versi 1.0 selesai",w:"26 Okt 2026"},{i:"music",t:"Playlist Cigarettes After Sex ditambahkan",w:"26 Okt 2026"},{i:"palette",t:"Desain dark glassmorphism diterapkan",w:"26 Okt 2026"}],
+tl:[{i:"rocket",t:"Website pribadi versi 1.0 selesai",w:"26 Okt 2026"},{i:"search",t:"Fitur pencarian ditambahkan",w:"26 Okt 2026"},{i:"palette",t:"Desain dark glassmorphism diterapkan",w:"26 Okt 2026"}],
 game:{n:"Belum ada game",p:"",last:"",hrs:"",status:"Kartu ini akan diperbarui saat ada game terbaru yang dimainkan.",cover:"",url:"",stats:[["Total playtime",""],["Achievement",""],["Level",""]]},
-/* Audio: isi src dengan URL atau data audio yang kamu punya hak pakainya. Tanpa src, tombol putar membuka lagunya di Spotify. */
-pl:[{t:"Apocalypse",a:"Cigarettes After Sex"},{t:"Sunsetz",a:"Cigarettes After Sex"},{t:"K.",a:"Cigarettes After Sex"},{t:"Nothing’s Gonna Hurt You Baby",a:"Cigarettes After Sex"},{t:"Cry",a:"Cigarettes After Sex"}],
 cats:["Web Development","UI/UX","Experiments","Other Projects"],
 proj:[
 {n:"Personal Digital Identity",c:"Web Development",s:"Selesai",i:"globe",d:"Website pribadi ini: profil, dashboard aktivitas, portfolio, skill, dan kontak dalam satu halaman.",t:["HTML","CSS","JavaScript"],demo:"",src:""},
 {n:"Activity dashboard",c:"Web Development",s:"Selesai",i:"layout-dashboard",d:"Kartu aktivitas, fokus, ketersediaan, dan timeline yang mudah diperbarui lewat satu konfigurasi.",t:["HTML","CSS","JavaScript"],demo:"",src:""},
 {n:"Dark glass design system",c:"UI/UX",s:"Selesai",i:"palette",d:"Palet, kartu kaca, tipografi Plus Jakarta Sans, dan komponen yang konsisten di seluruh halaman.",t:["CSS","Plus Jakarta Sans"],demo:"",src:""},
-{n:"Floating dock dan pencarian",c:"UI/UX",s:"Selesai",i:"layout-grid",d:"Dock gaya iOS dengan indikator aktif yang bergeser, deteksi section, dan overlay pencarian.",t:["CSS","IntersectionObserver"],demo:"",src:""},
-{n:"Floating music player",c:"Experiments",s:"Selesai",i:"music",d:"Pemutar berbentuk pill dengan seek, volume, visualizer, dan mode ringkas.",t:["HTMLAudioElement","CSS"],demo:"",src:""},
-{n:"Playlist Cigarettes After Sex",c:"Other Projects",s:"Selesai",i:"headphones",d:"Lima lagu pilihan di pemutar website. Tombol putar membuka lagunya di Spotify.",t:["Playlist"],demo:"",src:""}],
+{n:"Floating dock dan pencarian",c:"UI/UX",s:"Selesai",i:"layout-grid",d:"Dock gaya iOS dengan indikator aktif yang bergeser, deteksi section, dan overlay pencarian.",t:["CSS","IntersectionObserver"],demo:"",src:""}],
 skillCats:["Development","Design","Tools","Other Interests"],
 skills:[
 {n:"HTML & CSS",i:"code",c:"Development",s:"Practicing",d:"Layout responsif, grid, dan efek glassmorphism."},
-{n:"JavaScript",i:"terminal",c:"Development",s:"Currently Learning",d:"Interaksi, audio, dan state di browser."},
+{n:"JavaScript",i:"terminal",c:"Development",s:"Currently Learning",d:"Interaksi, animasi, dan state di browser."},
 {n:"UI design",i:"palette",c:"Design",s:"Practicing",d:"Hierarki visual, tipografi, dan konsistensi komponen."},
 {n:"Motion dan detail",i:"pen-tool",c:"Design",s:"Exploring",d:"Transisi halus dan micro-interaction yang tidak berlebihan."},
 {n:"Git dan GitHub",i:"git-branch",c:"Tools",s:"Exploring",d:"Version control dan alur kerja proyek."},
 {n:"Browser DevTools",i:"wrench",c:"Tools",s:"Practicing",d:"Debugging layout, performa, dan aksesibilitas."},
 {n:"Gaming",i:"gamepad-2",c:"Other Interests",s:"Comfortable",d:"Menikmati game sambil memperhatikan desain antarmukanya."},
-{n:"Musik",i:"music",c:"Other Interests",s:"Exploring",d:"Menyusun playlist dan menjelajahi genre baru."}]
+{n:"Teknologi Baru",i:"cpu",c:"Other Interests",s:"Exploring",d:"Mengeksplorasi tren teknologi web dan desain modern."}]
 };
 /* ===== akhir CONFIG ===== */
 
 const GR=["#8B5CF6,#3B82F6","#E040FB,#8B5CF6","#22D3EE,#3B82F6","#3B82F6,#E040FB"],LV=["Exploring","Currently Learning","Practicing","Building Projects","Comfortable"],DF="Deskripsi singkat. Ganti dengan isi milikmu di CONFIG.";
-const sd=$('#sd'),md=$('#md'),sq=$('#sq'),pl=$('#pl'),pp=$('#pp'),sk=$('#sk'),vl=$('#vl'),au=new Audio();
+const sd=$('#sd'),md=$('#md'),sq=$('#sq');
 const A=C.latest,G=C.game,gs=G.stats.filter(s=>s[1]),P=C.proj,S=C.skills,cvr=IMG(G.cover);
 let tt;const toast=m=>{const t=$('#ts');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2400)};
 const go=id=>{const el=document.getElementById(id);if(el)el.scrollIntoView()};
@@ -285,113 +228,4 @@ function chips(el,l,cb){el.innerHTML=l.map((c,i)=>`<button class="ch fb${i?'':' 
 /* ---- Hero ---- */
 document.title=C.name+' · '+C.handle;
 const ini=C.name.split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
-$('.hero').innerHTML=`<div class="rv"><p class="hi">Halo, saya ${E(C.name)}</p><h1>${E(C.headline)}</h1><p class="lead">${E(C.bio)}</p>
-<div class="acts"><button class="bt p" data-go="portfolio">Explore Portfolio</button><button class="bt" data-go="contact">Contact Me</button></div><div class="soc">${so(C.social.filter(vis))}</div></div>
-<div class="rv pf g"><div class="glow"></div><div class="av">${E(ini)}${IMG(C.avatar)?`<img src="${E(C.avatar)}" alt="Foto profil ${E(C.name)}" onerror="this.remove()">`:''}</div><h3>${E(C.name)}</h3><small>${E(C.handle)}</small>
-<div class="tg" style="justify-content:center;margin-top:14px"><span class="ch"><span class="dot"></span>${E(C.status)}</span>${C.loc?`<span class="ch"><i data-lucide="map-pin"></i>${E(C.loc)}</span>`:''}</div></div>`;
-
-/* ---- Activity ---- */
-$('#ag').innerHTML=`
-<article class="cd g s8 rv"><div class="k"><i data-lucide="zap"></i>Latest Activity</div><h3>${E(A.t)}</h3><span class="ch"><i data-lucide="clock"></i>${E(A.w)}</span><p style="margin-top:12px">${E(A.d)}</p></article>
-<article class="cd g s4 rv"><div class="k"><i data-lucide="users"></i>Availability</div><h3 class="row2"><span class="dot${C.avail.open?'':' off'}"></span>${E(C.avail.t)}</h3><p>${E(C.avail.d)}</p></article>
-<article class="cd g s4 rv"><div class="k"><i data-lucide="target"></i>Current Focus</div><h3>${E(C.focus.t)}</h3><p>${E(C.focus.d)}</p></article>
-<article class="cd g s4 rv"><div class="k"><i data-lucide="book-open"></i>Currently Learning</div><div class="tg">${C.learn.map(t=>`<em>${E(t)}</em>`).join('')}</div></article>
-<article class="cd g s4 r2 rv"><div class="k"><i data-lucide="list"></i>Activity Timeline</div><ol class="tl">${C.tl.map(x=>`<li><span class="ic"><i data-lucide="${E(x.i)}"></i></span><div><b>${E(x.t)}</b><small>${E(x.w)}</small></div></li>`).join('')}</ol></article>
-<article class="cd g gm s8 rv"><div class="art"${cvr?` style="background-image:url('${E(G.cover)}')"`:''}>${cvr?'':'<i data-lucide="gamepad-2"></i>'}</div><div class="ov"></div><div class="gi"><span class="ch"><i data-lucide="gamepad-2"></i>Last Played</span><h3>${E(G.n)}</h3>
-<div class="tg">${[G.p,G.last&&'Terakhir main: '+G.last,G.hrs&&'Durasi: '+G.hrs,...gs.map(s=>s[0]+': '+s[1])].filter(Boolean).map(x=>`<span class="ch">${E(x)}</span>`).join('')}</div><p style="margin-top:10px">${E(G.status)}</p>${G.last?'<button class="bt p" data-game style="margin-top:16px">Lihat detail</button>':''}</div></article>`;
-
-/* ---- Modal ---- */
-function openM(o){$('#mb').innerHTML=`<button class="ib xb" data-x aria-label="Tutup"><i data-lucide="x"></i></button><div class="th" style="background:${o.bg}">${o.ic}</div><h3 style="margin:16px 0 10px;font-size:24px">${E(o.t)}</h3><div class="tg" style="margin-bottom:12px">${o.ch.filter(Boolean).map(c=>`<span class="ch">${E(c)}</span>`).join('')}</div><p style="color:var(--t2)">${E(o.d)}</p>${o.tg?`<div class="tg" style="margin-top:14px">${o.tg.map(t=>`<em>${E(t)}</em>`).join('')}</div>`:''}
-<div class="ba" style="margin-top:20px">${o.ln.filter(l=>U(l[1])).map(l=>`<a class="bt p" href="${E(U(l[1]))}" target="_blank" rel="noopener noreferrer">${E(l[0])}<i data-lucide="external-link"></i></a>`).join('')||''}</div>`;ic();md.showModal()}
-const openP=i=>{const p=P[i];openM({bg:`linear-gradient(135deg,${GR[i%4]})`,ic:`<i data-lucide="${E(p.i)}"></i>`,t:p.n,ch:[p.c,p.s],d:p.d||DF,tg:p.t,ln:[['Live Demo',p.demo],['Source Code',p.src]]})};
-const openG=()=>openM({bg:cvr?`url('${E(G.cover)}') center/cover`:'linear-gradient(135deg,#312E81,#7E22CE 55%,#0E7490)',ic:'<i data-lucide="gamepad-2"></i>',t:G.n,ch:[G.p,G.last&&'Terakhir: '+G.last,G.hrs&&'Durasi: '+G.hrs,...gs.map(s=>s[0]+': '+s[1])],d:G.status,ln:[['Halaman terkait',G.url]]});
-
-/* ---- Portfolio ---- */
-let pc='',sc='',all=0;
-function rp(){const l=P.map((p,i)=>[p,i]).filter(([p])=>!pc||p.c===pc);$('#pg').innerHTML=l.map(([p,i])=>`<button class="cd g pj" data-p="${i}"><span class="th" style="background:linear-gradient(135deg,${GR[i%4]})"><i data-lucide="${E(p.i)}"></i></span><span class="pm"><span class="ch">${E(p.c)}</span><span class="ch">${E(p.s)}</span></span><b>${E(p.n)}</b><span class="ds">${E(p.d||DF)}</span><span class="tg">${p.t.map(t=>`<em>${E(t)}</em>`).join('')}</span></button>`).join('')||'<p class="mt">Belum ada project di kategori ini.</p>';ic()}
-chips($('#pf'),['All Projects',...C.cats],v=>{pc=v;rp()});
-$('#pg').onclick=e=>{const b=e.target.closest('[data-p]');if(b)openP(+b.dataset.p)};
-
-/* ---- Skills ---- */
-function rk(){const l=S.filter(s=>!sc||s.c===sc),v=!sc&&!all?l.slice(0,6):l;
-$('#sg').innerHTML=v.map(s=>{const k=Math.max(0,LV.indexOf(s.s));return`<article class="cd g sk"><div class="hd"><span class="ic"><i data-lucide="${E(s.i)}"></i></span><div><b>${E(s.n)}</b><small>${E(s.c)}</small></div></div><p style="color:var(--t2)">${E(s.d||'Tulis fokus latihanmu di CONFIG.')}</p><div class="trk" role="img" aria-label="Tahap ${k+1} dari 5: ${E(s.s)}">${[0,1,2,3,4].map(j=>`<i${j<=k?' class="on"':''}></i>`).join('')}</div><span class="ch" style="align-self:flex-start">${E(s.s)}</span></article>`}).join('')||'<p class="mt">Belum ada skill di kategori ini.</p>';
-const b=$('#sm');b.hidden=!(!sc&&l.length>6);$('span',b).textContent=all?'Sembunyikan':`Lihat semua skill (${l.length})`;ic()}
-chips($('#kf'),['All Skills',...C.skillCats],v=>{sc=v;all=0;rk()});
-$('#sm').onclick=()=>{all=!all;rk()};
-
-/* ---- Contact ---- */
-const cc=(i,n,v,b)=>`<article class="cd g ct rv"><div class="hd"><span class="ic"><i data-lucide="${i}"></i></span><div><small>${n}</small><div class="v">${v}</div></div></div><div class="ba">${b||'<small>Tambahkan URL di CONFIG untuk mengaktifkan tautan.</small>'}</div></article>`;
-const ext=(u,t)=>`<a class="bt p" href="${E(u)}" target="_blank" rel="noopener noreferrer">${t}<i data-lucide="external-link"></i></a>`;
-$('#cg').innerHTML=cc('mail','Email',E(C.email),`<a class="bt p" href="mailto:${E(C.email)}"><i data-lucide="send"></i>Contact via Email</a><button class="bt" data-cp="${E(C.email)}"><i data-lucide="copy"></i><span>Copy Email</span></button>`)
-+cc('message-circle','Discord',E(C.discord),`<button class="bt p" data-cp="${E(C.discord)}"><i data-lucide="copy"></i><span>Copy Username</span></button>`+(U(C.discordUrl)?ext(U(C.discordUrl),'Open Profile'):''))
-+C.social.filter(s=>s.n!=='Discord'&&U(s.u)).map(s=>cc(s.i,E(s.n),U(s.u)?E(s.u.replace(/^https?:\/\//,'')):'Belum dikonfigurasi',U(s.u)?ext(U(s.u),'Open '+E(s.n)):'')).join('');
-
-/* ---- Footer ---- */
-$('#fb').textContent=C.name;$('#yr').textContent=new Date().getFullYear();$('#fs').innerHTML=so(C.social.filter(vis));$('#up').onclick=()=>go('home');
-if(!C.ph)$$('.phc').forEach(n=>n.remove());
-
-/* ---- Global clicks ---- */
-document.addEventListener('click',e=>{const t=e.target;let b;
-if(b=t.closest('[data-go]')){e.preventDefault();go(b.dataset.go);return}
-if(b=t.closest('[data-cp]')){cp(b.dataset.cp).then(ok=>{toast(ok?'Disalin ke clipboard ✓':'Gagal menyalin. Salin manual: '+b.dataset.cp);const s=$('span',b);if(ok&&s){const o=s.textContent;s.textContent='Tersalin ✓';b.classList.add('ok');setTimeout(()=>{s.textContent=o;b.classList.remove('ok')},1600)}});return}
-if(b=t.closest('[data-nt]')){toast(b.dataset.nt+' belum dikonfigurasi. Isi URL di CONFIG.');return}
-if(t.closest('[data-x]')){t.closest('dialog').close();return}
-if(t.closest('[data-game]'))openG()});
-[sd,md].forEach(d=>d.addEventListener('click',e=>{if(e.target===d)d.close()}));
-
-/* ---- Dock, scroll spy, reveal ---- */
-const dk=$('.dock'),ind=$('.ind'),da=$$('a',dk);let f1=1;
-function mv(){const a=$('a.on',dk);if(!a)return;ind.style.width=a.offsetWidth+'px';ind.style.transform=`translateX(${a.offsetLeft}px)`;if(f1){f1=0;requestAnimationFrame(()=>ind.classList.add('rd'))}}
-function act(id){da.forEach(a=>{const on=a.dataset.go===id;a.classList.toggle('on',on);on?a.setAttribute('aria-current','true'):a.removeAttribute('aria-current')});mv()}
-act('home');addEventListener('resize',mv);addEventListener('load',mv);document.fonts&&document.fonts.ready.then(mv);
-const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&act(e.target.id)),{rootMargin:'-45% 0px -50% 0px'});
-$$('main section').forEach(s=>io.observe(s));
-addEventListener('scroll',()=>{if(innerHeight+scrollY>=document.documentElement.scrollHeight-6)act('contact')},{passive:true});
-const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}}),{threshold:.1});
-
-/* ---- Search ---- */
-const IX=[['Home','home'],['Activity','activity'],['Portfolio','portfolio'],['Skills','skills'],['Contact','contact']].map(([t,id])=>({t,k:'Section',f:()=>go(id)}))
-.concat(P.map((p,i)=>({t:p.n,k:'Project',f:()=>openP(i)})),S.map(s=>({t:s.n,k:'Skill',f:()=>go('skills')})),[...(G.last?[{t:G.n,k:'Game',f:openG}]:[]),{t:'Email',k:'Tautan',f:()=>go('contact')},{t:'Discord',k:'Tautan',f:()=>go('contact')}],
-C.social.filter(s=>s.n!=='Discord'&&U(s.u)).map(s=>({t:s.n,k:'Tautan',f:()=>U(s.u)?window.open(U(s.u),'_blank','noopener'):go('contact')})));
-function rsr(q){q=q.trim().toLowerCase();const l=IX.filter(x=>!q||(x.t+' '+x.k).toLowerCase().includes(q)).slice(0,8);$('#sr').innerHTML=l.map(x=>`<button class="rs" data-r="${IX.indexOf(x)}"><span>${E(x.t)}</span><span class="ch">${E(x.k)}</span></button>`).join('')||`<p class="mt">Tidak ada hasil untuk “${E(q)}”.</p>`}
-$('#sr').onclick=e=>{const b=e.target.closest('[data-r]');if(b){sd.close();IX[+b.dataset.r].f()}};
-sq.oninput=()=>rsr(sq.value);
-sq.onkeydown=e=>{if(e.key==='Enter'){const b=$('[data-r]',$('#sr'));if(b)b.click()}};
-$('#so').onclick=()=>{sq.value='';rsr('');sd.showModal();sq.focus()};
-addEventListener('keydown',e=>{if(document.querySelector('dialog[open]'))return;if((e.key==='/'&&!/INPUT|TEXTAREA/.test(document.activeElement.tagName))||(e.key==='k'&&(e.metaKey||e.ctrlKey))){e.preventDefault();$('#so').click()}});
-
-/* ---- Music player (HTMLAudioElement; tidak pernah mengklaim memutar sebelum audio benar-benar jalan) ---- */
-const L=C.pl.length?[...C.pl]:[{t:'Belum ada lagu',a:'',src:''}];let ti=0;
-const lnk=t=>U(t.link)||'https://open.spotify.com/search/'+encodeURIComponent((t.a+' '+t.t).replace(/’/g,"'")),tr=()=>L[ti],fm=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
-const v0=parseFloat(LS.g('vol'));au.volume=isNaN(v0)?.8:Math.min(1,Math.max(0,v0));vl.value=au.volume;au.preload='metadata';
-function ST(s){pl.dataset.s=s;$('#ar').textContent=({load:'Memuat…',err:'Audio gagal dimuat'})[s]||tr().a;$('#st').textContent=({none:'Audio belum dipasang. Tombol putar membuka lagunya di Spotify.',pause:'Siap diputar',load:'Memuat audio…',play:'Sedang diputar',err:'Gagal memuat. Coba file lain.'})[s];pp.setAttribute('aria-label',s==='play'?'Jeda':s==='none'?'Putar di Spotify':'Putar')}
-function upd(){const d=au.duration,t=au.currentTime,ok=isFinite(d)&&d>0,p=ok?t/d:0;if(!sk.matches(':active'))sk.value=p*1000;sk.style.setProperty('--p',p*100+'%');$('#tm').textContent=ok?fm(t)+' / '+fm(d):'0:00 / 0:00'}
-function ld(){const t=tr(),im=$('#ci');$('#ti').textContent=t.t;$('#cv').style.background=t.cover?'':`linear-gradient(135deg,${GR[ti%4]})`;if(t.cover){im.src=t.cover;im.hidden=false}else im.hidden=true;const sp=$('#sp');sp.href=lnk(t);sp.hidden=!!t.src;au.pause();if(t.src){au.src=t.src;au.load();sk.disabled=false;ST('pause')}else{au.removeAttribute('src');au.load();sk.disabled=true;ST('none')}upd()}
-function run(){ST('load');const r=au.play();if(r)r.catch(e=>{if(e.name==='AbortError')return;ST(e.name==='NotAllowedError'?'pause':'err')})}
-function nx(p){ti=(ti+1)%L.length;ld();if(p&&tr().src)run()}
-const has=()=>au.getAttribute('src');
-au.onloadstart=()=>{if(has())ST('load')};
-au.onloadedmetadata=()=>{upd();if(au.paused)ST('pause')};
-au.oncanplay=()=>{if(au.paused&&has())ST('pause')};
-au.onwaiting=()=>ST('load');au.onplaying=()=>ST('play');
-au.onpause=()=>{if(has())ST('pause')};
-au.onerror=()=>{if(has())ST('err')};
-au.ontimeupdate=upd;au.onended=()=>nx(1);
-const sync=()=>$('#inf').setAttribute('aria-expanded',pl.classList.contains('ex')),sv=()=>{LS.s('plm',pl.classList.contains('cm')?'cm':pl.classList.contains('ex')?'ex':'');sync()};
-pp.onclick=()=>{if(!tr().src){$('#sp').click();toast('Membuka lagu di Spotify…');return}au.paused?run():au.pause()};
-$('#nx').onclick=()=>nx(!au.paused);
-sk.oninput=()=>{const d=au.duration;if(isFinite(d)&&d>0){au.currentTime=sk.value/1000*d;sk.style.setProperty('--p',sk.value/10+'%')}};
-vl.oninput=()=>{au.volume=+vl.value;LS.s('vol',vl.value)};
-$('#cv').onclick=()=>{pl.classList.toggle('cm');pl.classList.remove('ex');sv()};
-$('#inf').onclick=()=>{pl.classList.remove('cm');pl.classList.toggle('ex');sv()};
-$('#cmb').onclick=()=>{pl.classList.add('cm');pl.classList.remove('ex');sv()};
-$('#ad').onclick=()=>$('#fi').click();
-$('#fi').onchange=e=>{const fs=[...e.target.files];if(!fs.length)return;if(!L.some(t=>t.src))L.length=0;const n=L.length;fs.forEach(f=>L.push({t:f.name.replace(/\.[^.]+$/,''),a:'File lokal',src:URL.createObjectURL(f)}));ti=n;ld();run();e.target.value=''};
-const pm=LS.g('plm');if(pm==='cm')pl.classList.add('cm');if(pm==='ex')pl.classList.add('ex');sync();ld();
-
-/* ---- Init ---- */
-rp();rk();ic();$$('.rv').forEach(n=>ro.observe(n));mv();
-})();
-</script>
-</body>
-</html>
+$('.hero').innerHTML=`<div class="rv"><p class="hi">Halo, saya ${E(C.name)}</p><h1>${E(C.headl
